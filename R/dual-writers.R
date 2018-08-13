@@ -2,6 +2,7 @@
 # Write to csv and rds ----------------------------------------------------
 
 # Write the same data to csv and rds files, always writing locally
+#' @export
 write_csv_rds <- function(data, path, ...) {
   # Temporary local files
   temp_csv <- tempfile()
@@ -34,6 +35,7 @@ remove_if_exists <- function(..., .files = list()) {
 # Write to sav and rds ----------------------------------------------------
 
 # Write the same data to sav and rds files, always writing locally
+#' @export
 write_sav_rds <- function(data, path, ...) {
   # Temporary local files
   temp_sav <- tempfile()
@@ -56,6 +58,7 @@ write_sav_rds <- function(data, path, ...) {
 # sav_rds helpers ---------------------------------------------------------
 
 # Some magic to format sav files to look pretty in SPSS
+#' @export
 format_sav <- function(data) {
   data %>%
     purrr::modify_if(lubridate::is.Date, set_format_spss, "EDATE10") %>%

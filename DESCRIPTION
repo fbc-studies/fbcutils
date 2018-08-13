@@ -14,5 +14,10 @@ Imports:
     jpeg,
     png,
     grid,
-    gtable
+    gtable,
+    data.table,
+    readr,
+    haven,
+    purrr,
+    lubridate
 RoxygenNote: 6.0.1.9000
