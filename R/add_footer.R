@@ -1,11 +1,13 @@
+#' @export
+#' @import ggplot2
 add_footer <- function(x, caption = "", logo = NULL, height = 0.5) {
-  
+
   probable_files <- c("logo.png", "logo.jpg", "//helfs01.thl.fi/documents/fbc_projects/p/r-helpers/R/logo.jpg")
-  
+
   no_logo_warning <- "No logo file or a non-working logo file was provided.
   You can place one (logo.png/logo.jpg) in the working directory or provide one
   with the logo argument."
-  
+
   if (is.null(logo) & any(file.exists(probable_files))) {
     logo <- subset(probable_files, file.exists(probable_files))[1]
   }
@@ -26,7 +28,7 @@ add_footer <- function(x, caption = "", logo = NULL, height = 0.5) {
   } else if (is.null(logo)) {
     warning(no_logo_warning)
   }
-  
+
   capt <- grid::textGrob(caption, hjust = 0, x = grid::unit(0, "npc"), gp = grid::gpar(fontsize = x$theme$axis.text.x$size))
 
   if (exists("logo_img")) {
