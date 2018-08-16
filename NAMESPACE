@@ -2,6 +2,7 @@
 
 export(add_footer)
 export(format_sav)
+export(interleave)
 export(legend_skipper)
 export(write_csv_rds)
 export(write_sav_rds)
