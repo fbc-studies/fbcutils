@@ -1,4 +1,3 @@
-#' @export
 thl_colors <- c(
   `sininen1` = "#2f62ad",
   `sininen2` = "#2f62ad",
@@ -27,10 +26,10 @@ thl_colors <- c(
 
 thl_cols <- function(...) {
   cols <- c(...)
-  
+
   if (is.null(cols))
     return (thl_colors)
-  
+
   thl_colors[cols]
 }
 
@@ -60,23 +59,27 @@ thl_palettes <- list(
 
 thl_pal <- function(palette = "main", reverse = FALSE, ...) {
   pal <- thl_palettes[[palette]]
-  
+
   if (reverse) pal <- rev(pal)
-  
+
   colorRampPalette(pal, ...)
 }
+
+#' @export
 scale_color_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, ...) {
   pal <- thl_pal(palette = palette, reverse = reverse)
-  
+
   if (discrete) {
     discrete_scale("colour", paste0("thl_", palette), palette = pal, ...)
   } else {
     scale_color_gradientn(colours = pal(256), ...)
   }
 }
+
+#' @export
 scale_fill_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, ...) {
   pal <- thl_pal(palette = palette, reverse = reverse)
-  
+
   if (discrete) {
     discrete_scale("fill", paste0("thl_", palette), palette = pal, ...)
   } else {
@@ -84,4 +87,5 @@ scale_fill_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, .
   }
 }
 
+#' @export
 thl_green <- "#519b2f"
