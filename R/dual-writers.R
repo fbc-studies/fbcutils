@@ -3,7 +3,7 @@
 
 # Write the same data to csv and rds files, always writing locally
 #' @export
-write_csv_rds <- function(data, path, ...) {
+write_csv_rds <- function(data, path, compress = "gz", ...) {
   # Temporary local files
   temp_csv <- tempfile()
   temp_rds <- tempfile()
@@ -13,7 +13,7 @@ write_csv_rds <- function(data, path, ...) {
 
   # Write data to temp files
   data.table::fwrite(data, file = temp_csv, sep = ";")
-  readr::write_rds(data, path = temp_rds, ...)
+  readr::write_rds(data, path = temp_rds, compress = compress, ...)
 
   # Move to destination path
   p <- tools::file_path_sans_ext(path)
@@ -36,7 +36,7 @@ remove_if_exists <- function(..., .files = list()) {
 
 # Write the same data to sav and rds files, always writing locally
 #' @export
-write_sav_rds <- function(data, path, ...) {
+write_sav_rds <- function(data, path, compress = "gz", ...) {
   # Temporary local files
   temp_sav <- tempfile()
   temp_rds <- tempfile()
@@ -46,7 +46,7 @@ write_sav_rds <- function(data, path, ...) {
 
   # Write data to temp files
   haven::write_sav(format_sav(data), path = temp_sav)
-  readr::write_rds(data, path = temp_rds, ...)
+  readr::write_rds(data, path = temp_rds, compress = compress, ...)
 
   # Move to destination path
   p <- tools::file_path_sans_ext(path)
