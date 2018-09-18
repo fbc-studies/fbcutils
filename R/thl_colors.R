@@ -84,7 +84,7 @@ thl_palettes <- list(
   `Reds` = thl_cols("haivutus1", "punainen1"),
   `Reds2` = thl_cols("haivutus2", "punainen1"),
   `GrBu` = thl_cols("vihrea1", "haivutus2"),
-  `BuBu` = thl_cols("haivutus1", "haivutus2"),
+  `BuBu` = thl_cols("sininen2", "haivutus2"),
   `RuBu` = thl_cols("punainen1", "haivutus2")
 )
 
