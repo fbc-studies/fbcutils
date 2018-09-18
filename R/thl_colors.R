@@ -89,3 +89,21 @@ scale_fill_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, .
 
 #' @export
 thl_green <- "#519b2f"
+
+#' Plot the colors in THL palettes
+#' @export
+display_thl_pal <- function() {
+  thl_palettes %>%
+    purrr::map(tibble::enframe) %>%
+    bind_rows(.id = "palette") %>%
+    group_by(palette) %>%
+    mutate(i = row_number()) %>%
+      ggplot(aes(i, palette, fill = value)) +
+        scale_fill_identity() +
+        geom_tile() +
+        theme_void() +
+        theme(
+          axis.text.y = element_text(),
+          plot.margin = margin(1, 1, 1, 1, unit = "line")
+        )
+}
