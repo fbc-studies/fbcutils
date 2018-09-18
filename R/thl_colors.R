@@ -1,3 +1,4 @@
+#' @export
 thl_colors <- c(
   `sininen1` = "#2f62ad",
   `sininen2` = "#2f62ad",
