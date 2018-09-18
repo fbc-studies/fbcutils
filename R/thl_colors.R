@@ -22,7 +22,8 @@ thl_colors <- c(
   `haivutus1` = "#fce4c3",
   `haivutus2` = "#d3eaed",
   `GrBu3` = "#94be7b",
-  `GrBu4` = "#b8ceae")
+  `GrBu4` = "#b8ceae"
+)
 
 thl_cols <- function(...) {
   cols <- c(...)
@@ -34,30 +35,41 @@ thl_cols <- function(...) {
 }
 
 thl_palettes <- list(
-  `Set1`  = thl_cols("vihrea1", "sininen2", "roosa", "cyanide1", "punainen1", "orange1"),
-  `BuRd`  = thl_cols("sininen2", "sininen4", "sininen5", "harmaa", "punainen3", "punainen2", "punainen1"),
-  `BuOr`  = thl_cols("sininen2", "sininen4", "sininen5", "harmaa", "orange3", "orange2", "orange1"),
-  `CyOr`  = thl_cols("cyanide1", "cyanide2", "cyanide3", "harmaa", "orange3", "orange2", "orange1"),
-  `CyRd`  = thl_cols("cyanide1", "cyanide2", "cyanide3", "harmaa", "punainen3", "punainen2", "punainen1"),
-  `GrRd`  = thl_cols("vihrea1", "GrBu3", "GrBu4", "harmaa", "punainen3", "punainen2", "punainen1"),
-  `GrOr`  = thl_cols("vihrea1", "GrBu3", "GrBu4", "harmaa", "orange3", "orange2", "orange1"),
-  `Turqoises` = thl_cols('turkoosi1', 'turkoosi2'),
-  `Turquoises` = thl_cols('turkoosi1', 'turkoosi2'),
-  `Greens` = thl_cols('haivutus1', 'vihrea1'),
-  `Greens2` = thl_cols('haivutus2', 'vihrea1'),
-  `Blues` = thl_cols('haivutus1', 'sininen1'),
-  `Blues2` = thl_cols('haivutus2', 'sininen1'),
-  `Reds` = thl_cols('haivutus1', 'punainen1'),
-  `Reds2` = thl_cols('haivutus2', 'punainen1'),
-  `GrBu` = thl_cols('vihrea1', 'haivutus2'),
-  `BuBu` = thl_cols('haivutus1', 'haivutus2'),
-  `RuBu` = thl_cols('punainen1', 'haivutus2'),
-  `Paired2` = thl_cols('vihrea1', 'vihrea2'),
-  `Paired3` = thl_cols('sininen2', 'cyanide1'),
-  `Paired4` = thl_cols('punainen1', 'roosa')
+  `Set1`  = thl_cols("vihrea1", "sininen2", "roosa",
+                     "cyanide1", "punainen1", "orange1"),
+  `BuRd`  = thl_cols("sininen2", "sininen4", "sininen5",
+                     "harmaa", "punainen3", "punainen2", "punainen1"),
+  `BuOr`  = thl_cols("sininen2", "sininen4", "sininen5",
+                     "harmaa", "orange3", "orange2", "orange1"),
+  `CyOr`  = thl_cols("cyanide1", "cyanide2", "cyanide3", "harmaa",
+                     "orange3", "orange2", "orange1"),
+  `CyRd`  = thl_cols("cyanide1", "cyanide2", "cyanide3", "harmaa",
+                     "punainen3", "punainen2", "punainen1"),
+  `GrRd`  = thl_cols("vihrea1", "GrBu3", "GrBu4", "harmaa",
+                     "punainen3", "punainen2", "punainen1"),
+  `GrOr`  = thl_cols("vihrea1", "GrBu3", "GrBu4", "harmaa",
+                     "orange3", "orange2", "orange1"),
+  `Turqoises` = thl_cols("turkoosi1", "turkoosi2"),
+  `Turquoises` = thl_cols("turkoosi1", "turkoosi2"),
+  `Greens` = thl_cols("haivutus1", "vihrea1"),
+  `Greens2` = thl_cols("haivutus2", "vihrea1"),
+  `Blues` = thl_cols("haivutus1", "sininen1"),
+  `Blues2` = thl_cols("haivutus2", "sininen1"),
+  `Reds` = thl_cols("haivutus1", "punainen1"),
+  `Reds2` = thl_cols("haivutus2", "punainen1"),
+  `GrBu` = thl_cols("vihrea1", "haivutus2"),
+  `BuBu` = thl_cols("haivutus1", "haivutus2"),
+  `RuBu` = thl_cols("punainen1", "haivutus2"),
+  Paired1 = thl_cols("vihrea1", "vihrea2"),
+  Paired2 = thl_cols("sininen2", "cyanide1"),
+  Paired3 = thl_cols("punainen1", "roosa"),
+  Paired4 = thl_cols("vihrea1", "sininen2"),
+  Paired5 = thl_cols("cyanide1", "orange1"),
+  Paired6 = thl_cols("vihrea1", "orange1")
 )
 
-thl_pal <- function(palette = "main", reverse = FALSE, ...) {
+#' @export
+thl_pal <- function(palette = "Set1", reverse = FALSE, ...) {
   pal <- thl_palettes[[palette]]
 
   if (reverse) pal <- rev(pal)
@@ -66,7 +78,8 @@ thl_pal <- function(palette = "main", reverse = FALSE, ...) {
 }
 
 #' @export
-scale_color_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, ...) {
+scale_color_thl <- function(palette = "Set1", discrete = TRUE,
+                            reverse = FALSE, ...) {
   pal <- thl_pal(palette = palette, reverse = reverse)
 
   if (discrete) {
@@ -77,7 +90,8 @@ scale_color_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, 
 }
 
 #' @export
-scale_fill_thl <- function(palette = "Set1", discrete = TRUE, reverse = FALSE, ...) {
+scale_fill_thl <- function(palette = "Set1", discrete = TRUE,
+                           reverse = FALSE, ...) {
   pal <- thl_pal(palette = palette, reverse = reverse)
 
   if (discrete) {
@@ -106,4 +120,12 @@ display_thl_pal <- function() {
           axis.text.y = element_text(),
           plot.margin = margin(1, 1, 1, 1, unit = "line")
         )
+}
+
+show_cols <- function(colors) {
+  n <- length(colors)
+  ggplot() +
+    geom_tile(aes(1:n, 1, fill = colors)) +
+    scale_fill_identity() +
+    theme_void()
 }
