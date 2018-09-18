@@ -35,8 +35,34 @@ thl_cols <- function(...) {
 }
 
 thl_palettes <- list(
-  `Set1`  = thl_cols("vihrea1", "sininen2", "roosa",
-                     "cyanide1", "punainen1", "orange1"),
+  AreaSet1 = thl_cols("vihrea1", "sininen2", "roosa",
+                      "cyanide1", "punainen1", "orange1"),
+  AreaPaired1 = thl_cols("vihrea1", "vihrea2"),
+  AreaPaired2 = thl_cols("sininen2", "cyanide1"),
+  AreaPaired3 = thl_cols("punainen1", "roosa"),
+  AreaPaired4 = thl_cols("vihrea1", "sininen2"),
+  AreaPaired5 = thl_cols("cyanide1", "orange1"),
+  AreaPaired6 = thl_cols("vihrea1", "orange1"),
+  AreaTriplet1 = thl_cols("vihrea1", "sininen2", "orange1"),
+  AreaTriplet2 = thl_cols("sininen2", "cyanide1", "roosa"),
+  AreaTriplet3 = thl_cols("vihrea1", "sininen2", "roosa"),
+  AreaTriplet4 = thl_cols("sininen2", "punainen1", "orange1"),
+  AreaTriplet5 = thl_cols("vihrea1", "orange1", "roosa"),
+  AreaTriplet6 = thl_cols("punainen1", "orange1", "roosa"),
+  Set1 = thl_cols("vihrea1", "sininen2", "punainen1",
+                  "cyanide1", "orange1", "roosa"),
+  Paired1 = thl_cols("vihrea1", "sininen2"),
+  Paired2 = thl_cols("sininen2", "punainen1"),
+  Paired3 = thl_cols("vihrea1", "punainen1"),
+  Paired4 = thl_cols("vihrea1", "cyanide1"),
+  Paired5 = thl_cols("cyanide1", "punainen1"),
+  Paired6 = thl_cols("vihrea1", "orange1"),
+  Triplet1 = thl_cols("vihrea1", "sininen2", "punainen1"),
+  Triplet2 = thl_cols("vihrea1", "cyanide1", "punainen1"),
+  Triplet3 = thl_cols("vihrea1", "sininen2", "orange1"),
+  Triplet4 = thl_cols("vihrea1", "cyanide1", "orange1"),
+  Triplet5 = thl_cols("vihrea1", "sininen2", "roosa"),
+  Triplet6 = thl_cols("sininen2", "cyanide1", "roosa"),
   `BuRd`  = thl_cols("sininen2", "sininen4", "sininen5",
                      "harmaa", "punainen3", "punainen2", "punainen1"),
   `BuOr`  = thl_cols("sininen2", "sininen4", "sininen5",
@@ -59,13 +85,7 @@ thl_palettes <- list(
   `Reds2` = thl_cols("haivutus2", "punainen1"),
   `GrBu` = thl_cols("vihrea1", "haivutus2"),
   `BuBu` = thl_cols("haivutus1", "haivutus2"),
-  `RuBu` = thl_cols("punainen1", "haivutus2"),
-  Paired1 = thl_cols("vihrea1", "vihrea2"),
-  Paired2 = thl_cols("sininen2", "cyanide1"),
-  Paired3 = thl_cols("punainen1", "roosa"),
-  Paired4 = thl_cols("vihrea1", "sininen2"),
-  Paired5 = thl_cols("cyanide1", "orange1"),
-  Paired6 = thl_cols("vihrea1", "orange1")
+  `RuBu` = thl_cols("punainen1", "haivutus2")
 )
 
 #' @export
@@ -110,7 +130,9 @@ display_thl_pal <- function() {
   thl_palettes %>%
     purrr::map(tibble::enframe) %>%
     bind_rows(.id = "palette") %>%
-    group_by(palette) %>%
+    group_by(palette = palette %>%
+               forcats::fct_inorder() %>%
+               forcats::fct_rev()) %>%
     mutate(i = row_number()) %>%
       ggplot(aes(i, palette, fill = value)) +
         scale_fill_identity() +
