@@ -75,14 +75,14 @@ thl_palettes <- list(
                     "punainen3", "punainen2", "punainen1"),
   `GrOr` = thl_cols("vihrea1", "GrBu3", "GrBu4", "harmaa",
                     "orange3", "orange2", "orange1"),
-  `Turqoises`  = thl_cols("turkoosi1", "turkoosi2"),
-  `Turquoises` = thl_cols("turkoosi1", "turkoosi2"),
   `Greens`  = thl_cols("haivutus1", "vihrea1"),
   `Greens2` = thl_cols("haivutus2", "vihrea1"),
   `Blues`   = thl_cols("haivutus1", "sininen1"),
   `Blues2`  = thl_cols("haivutus2", "sininen2"),
   `Reds`    = thl_cols("haivutus1", "punainen1"),
-  `Reds2`   = thl_cols("haivutus2", "punainen1")
+  `Reds2`   = thl_cols("haivutus2", "punainen1"),
+  `Turqoises`  = thl_cols("turkoosi1", "turkoosi2"),
+  `Turquoises` = thl_cols("turkoosi1", "turkoosi2")
 )
 
 #' @export
