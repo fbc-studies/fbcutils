@@ -22,7 +22,8 @@ thl_colors <- c(
   `haivutus1` = "#fce4c3",
   `haivutus2` = "#d3eaed",
   `GrBu3` = "#94be7b",
-  `GrBu4` = "#b8ceae"
+  `GrBu4` = "#b8ceae",
+  puuttuva = "#c3c2c6"
 )
 
 thl_cols <- function(...) {
@@ -91,16 +92,36 @@ thl_pal <- function(palette = "Set1", reverse = FALSE, ...) {
 
   if (reverse) pal <- rev(pal)
 
-  colorRampPalette(pal, ...)
+  if (is_qualitative(palette)) {
+    simple_pal(pal, default = thl_cols("puuttuva"))
+  } else {
+    colorRampPalette(pal, ...)
+  }
+}
+
+is_qualitative <- function(palette) {
+  grepl("set|paired|triplet", palette, ignore.case = TRUE)
+}
+
+simple_pal <- function(values, default = NA) {
+  force(values)
+  force(default)
+
+  function(n) {
+    cols <- unname(values)[seq_len(n)]
+    replace(cols, is.na(cols), default)
+  }
 }
 
 #' @export
 scale_color_thl <- function(palette = "Set1", discrete = TRUE,
-                            reverse = FALSE, ...) {
+                            reverse = FALSE, ...,
+                            na.value = thl_cols("puuttuva")) {
   pal <- thl_pal(palette = palette, reverse = reverse)
 
   if (discrete) {
-    discrete_scale("colour", paste0("thl_", palette), palette = pal, ...)
+    discrete_scale("colour", paste0("thl_", palette), palette = pal, ...,
+                   na.value = na.value)
   } else {
     scale_color_gradientn(colours = pal(256), ...)
   }
@@ -108,11 +129,13 @@ scale_color_thl <- function(palette = "Set1", discrete = TRUE,
 
 #' @export
 scale_fill_thl <- function(palette = "Set1", discrete = TRUE,
-                           reverse = FALSE, ...) {
+                           reverse = FALSE, ...,
+                           na.value = thl_cols("puuttuva")) {
   pal <- thl_pal(palette = palette, reverse = reverse)
 
   if (discrete) {
-    discrete_scale("fill", paste0("thl_", palette), palette = pal, ...)
+    discrete_scale("fill", paste0("thl_", palette), palette = pal, ...,
+                   na.value = na.value)
   } else {
     scale_fill_gradientn(colours = pal(256), ...)
   }
@@ -131,14 +154,14 @@ display_thl_pal <- function() {
                forcats::fct_inorder() %>%
                forcats::fct_rev()) %>%
     mutate(i = row_number()) %>%
-      ggplot(aes(i, palette, fill = value)) +
-        scale_fill_identity() +
-        geom_tile() +
-        theme_void() +
-        theme(
-          axis.text.y = element_text(),
-          plot.margin = margin(1, 1, 1, 1, unit = "line")
-        )
+    ggplot(aes(i, palette, fill = value)) +
+      scale_fill_identity() +
+      geom_tile() +
+      theme_void() +
+      theme(
+        axis.text.y = element_text(),
+        plot.margin = margin(1, 1, 1, 1, unit = "line")
+      )
 }
 
 show_cols <- function(colors) {
