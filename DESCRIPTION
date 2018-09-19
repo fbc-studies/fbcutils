@@ -22,7 +22,8 @@ Imports:
     lubridate,
     dplyr,
     stringr,
-    ggplot2
+    ggplot2,
+    magrittr
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 Suggests: 
