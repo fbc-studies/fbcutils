@@ -87,10 +87,11 @@ thl_palettes <- list(
 )
 
 #' @export
-thl_pal <- function(palette = "Set1", reverse = FALSE, ...) {
+thl_pal <- function(palette = "Set1", reverse = FALSE, ..., direction = 1) {
   pal <- thl_palettes[[palette]]
 
-  if (reverse) pal <- rev(pal)
+  stopifnot(abs(direction) == 1)
+  if (reverse || (direction == -1)) pal <- rev(pal)
 
   if (is_qualitative(palette)) {
     simple_pal(pal, default = thl_cols("puuttuva"))
@@ -116,8 +117,9 @@ simple_pal <- function(values, default = NA) {
 #' @export
 scale_color_thl <- function(palette = "Set1", discrete = TRUE,
                             reverse = FALSE, ...,
-                            na.value = thl_cols("puuttuva")) {
-  pal <- thl_pal(palette = palette, reverse = reverse)
+                            na.value = thl_cols("puuttuva"),
+                            direction = 1) {
+  pal <- thl_pal(palette = palette, reverse = reverse, direction = direction)
 
   if (discrete) {
     discrete_scale("colour", paste0("thl_", palette), palette = pal, ...,
@@ -130,8 +132,9 @@ scale_color_thl <- function(palette = "Set1", discrete = TRUE,
 #' @export
 scale_fill_thl <- function(palette = "Set1", discrete = TRUE,
                            reverse = FALSE, ...,
-                           na.value = thl_cols("puuttuva")) {
-  pal <- thl_pal(palette = palette, reverse = reverse)
+                           na.value = thl_cols("puuttuva"),
+                           direction = 1) {
+  pal <- thl_pal(palette = palette, reverse = reverse, direction = direction)
 
   if (discrete) {
     discrete_scale("fill", paste0("thl_", palette), palette = pal, ...,
