@@ -1,5 +1,3 @@
-#' @import pryr
-#' @import openxlsx
 #' @export
 fixed_text_size <- function(size) {
   new_elements <- theme_get() %>%
@@ -7,14 +5,18 @@ fixed_text_size <- function(size) {
     modify(~ element_text(size = size))
   invoke(theme, new_elements)
 }
+#' @export
 not_distinct <- function(.data, ...) {
   ungroup(filter(group_by(.data, ...), n() > 1L))
 }
+#' @export
 pcomma <- function(x) paste(x * 100, "%")
+#' @export
 gcommap <- function(x) {
   format(x * 100, big.mark = " ", decimal.mark = ",", scientific = FALSE) %>%
     paste0(" %")
 }
+#' @export
 np <- function(df, x, ...) {
   count_var <- enquo(x)
   group_var <- quos(...)
@@ -25,20 +27,14 @@ np <- function(df, x, ...) {
     mutate(p = n / sum(n), n_ryhma = paste0('', sum(n), '')) %>%
     ungroup
 }
+#' @export
 kylla_ei <- partial(factor, levels = c(T, F), labels = c("Kyllä", "Ei"))
-excel_save <- function(file, ...) {
-  kamat <- pryr::named_dots(...)
-
-  data <- list(...)
-  data %>%
-    set_names(kamat) %>%
-    openxlsx::write.xlsx(file)
-
-}
+#' @export
 to_na <- function(x, value) {
   x[x %in% value] <- NA
   x
 }
+#' @export
 tidy_text <- function(x) {
   x <- tolower(x)
   x <- gsub("-|\r|\n", "", x)
