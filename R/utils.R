@@ -1,3 +1,4 @@
+#' @import purrr
 #' @export
 fixed_text_size <- function(size) {
   new_elements <- theme_get() %>%
@@ -28,7 +29,7 @@ np <- function(df, x, ...) {
     ungroup
 }
 #' @export
-kylla_ei <- partial(factor, levels = c(T, F), labels = c("Kyllä", "Ei"))
+kylla_ei <- purrr::partial(factor, levels = c(T, F), labels = c("Kyllä", "Ei"))
 #' @export
 to_na <- function(x, value) {
   x[x %in% value] <- NA
