@@ -1,3 +1,5 @@
+# Collect "str_" prefixed string manipulation functions here --------------
+
 #' Align a vector of character strings
 #'
 #' Align a vector of character strings by padding appropriately with spaces.
