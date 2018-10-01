@@ -9,15 +9,17 @@ str_align(x, align = c("left", "right", "center"))
 \arguments{
 \item{x}{a character vector}
 
-\item{align}{string specifying alignment: in \code{c("left", "right", "center")}}
+\item{align}{string specifying alignment}
 }
 \value{
 \code{x} with all elements padded to the maximum width and aligned
+}
+\description{
+Align a vector of character strings
+}
+\examples{
 x <- c("short", "medium length", "and a rather long string")
 str_align(x, "left")
 str_align(x, "right")
 str_align(x, "center")
-}
-\description{
-Align a vector of character strings
 }
