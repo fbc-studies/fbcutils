@@ -25,5 +25,5 @@ str_align <- function(x, align = c("left", "right", "center")) {
 }
 
 align_to_side <- function(x) {
-  c(left = "left", right = "right", center = "both")[x]
+  c(left = "right", right = "left", center = "both")[x]
 }
