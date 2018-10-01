@@ -15,11 +15,15 @@ str_align(x, align = c("left", "right", "center"))
 \code{x} with all elements padded to the maximum width and aligned
 }
 \description{
-Align a vector of character strings
+Align a vector of character strings by padding approriately with spaces.
+Naturally fails hopelessly if text is rendered in a non-monospace font.
 }
 \examples{
 x <- c("short", "medium length", "and a rather long string")
 str_align(x, "left")
 str_align(x, "right")
 str_align(x, "center")
+
+# can also use a vector of alignments
+str_align(x, c("center", "right", "left"))
 }
