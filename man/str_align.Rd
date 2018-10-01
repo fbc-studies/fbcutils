@@ -4,12 +4,13 @@
 \alias{str_align}
 \title{Align a vector of character strings}
 \usage{
-str_align(x, align = c("left", "right", "center"))
+str_align(x, align = "left")
 }
 \arguments{
-\item{x}{a character vector}
+\item{x}{A character vector.}
 
-\item{align}{string specifying alignment}
+\item{align}{A character vector specifying alignment. Valid values are
+\code{"left"}, \code{"right"}, and \code{"center"}.}
 }
 \value{
 \code{x} with all elements padded to the maximum width and aligned
