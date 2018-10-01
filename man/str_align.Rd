@@ -4,13 +4,12 @@
 \alias{str_align}
 \title{Align a vector of character strings}
 \usage{
-str_align(x, align = "left")
+str_align(x, align = c("left", "right", "center"))
 }
 \arguments{
 \item{x}{A character vector.}
 
-\item{align}{A character vector specifying alignment. Valid values are
-\code{"left"}, \code{"right"}, and \code{"center"}.}
+\item{align}{A string specifying alignment.}
 }
 \value{
 \code{x} with all elements padded to the maximum width and aligned
@@ -24,7 +23,4 @@ x <- c("short", "medium length", "and a rather long string")
 str_align(x, "left")
 str_align(x, "right")
 str_align(x, "center")
-
-# can also use a vector of alignments
-str_align(x, c("center", "right", "left"))
 }
