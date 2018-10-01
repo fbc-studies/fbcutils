@@ -1,7 +1,7 @@
 #' Align a vector of character strings
 #'
-#' Align a vector of character strings by padding approriately with spaces.
-#' Naturally fails hopelessly if text is rendered in a non-monospace font.
+#' Align a vector of character strings by padding appropriately with spaces.
+#' Naturally fails hopelessly if the text is rendered in a non-monospace font.
 #'
 #' @param x a character vector
 #' @param align string specifying alignment
