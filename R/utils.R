@@ -25,7 +25,7 @@ np <- function(df, x, ...) {
   df %>%
     group_by(!!!group_var) %>%
     count(!!count_var) %>%
-    mutate(p = n / sum(n), n_ryhma = paste0('', sum(n), '')) %>%
+    mutate(p = n / sum(n), n_ryhma = sum(n)) %>%
     ungroup
 }
 #' @export
