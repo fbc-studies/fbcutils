@@ -42,3 +42,5 @@ tidy_text <- function(x) {
   x <- gsub(" ", "_", x)
   x
 }
+#' @export
+'%not_in%' <- Negate('%in%')
