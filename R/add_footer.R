@@ -15,7 +15,7 @@ add_footer <- function(x, caption = "", logo = NULL, height = 0.5) {
 
     if (ext %in% c("jpg", "jpeg")) {
       logo <- jpeg::readJPEG(logo)
-    } else if (file_ext_ == "png") {
+    } else if (ext %in% "png") {
       logo <- png::readPNG(logo)
     } else {
       warning(
