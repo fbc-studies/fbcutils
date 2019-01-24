@@ -1,42 +1,37 @@
+#' Add a footer with a caption and a logo into a ggplot
+#' @param x a ggplot object
+#' @param caption text to display in the footer
+#' @param logo path to a jpg/jpeg/png file. Set to `NA` to disable. Defaults to
+#'   a short THL pearl logo.
 #' @export
 #' @import ggplot2
 add_footer <- function(x, caption = "", logo = NULL, height = 0.5) {
 
-  probable_files <- c("logo.png", "logo.jpg", "//helfs01.thl.fi/documents/fbc_projects/p/r-helpers/R/logo.jpg")
+  if (is.null(logo)) {
+    logo <- thl_logo
+  } else if (!is.na(logo)) {
+    stopifnot(is.character(logo))
+    ext <- tools::file_ext(logo)
 
-  no_logo_warning <- "No logo file or a non-working logo file was provided.
-  You can place one (logo.png/logo.jpg) in the working directory or provide one
-  with the logo argument."
-
-  if (is.null(logo) & any(file.exists(probable_files))) {
-    logo <- subset(probable_files, file.exists(probable_files))[1]
-  }
-
-  if (!is.null(logo)) {
-
-    if (tools::file_ext(logo) %in% c("jpg", "jpeg", "png")) {
-      file_ext_ <- tools::file_ext(logo)
-
-      if (file_ext_ %in% c("jpg", "jpeg")) {
-          logo_img <- jpeg::readJPEG(logo)
-        } else if (file_ext_ == "png") {
-          logo_img <- png::readPNG(logo)
-        }
+    if (ext %in% c("jpg", "jpeg")) {
+      logo <- jpeg::readJPEG(logo)
+    } else if (file_ext_ == "png") {
+      logo <- png::readPNG(logo)
     } else {
-        warning(no_logo_warning)
-      }
-  } else if (is.null(logo)) {
-    warning(no_logo_warning)
+      warning(
+        "No logo file or a non-working logo file was provided.\n",
+        "You can place one (logo.png/logo.jpg) in the working directory\n",
+        "or provide one with the logo argument."
+      )
+      logo <- NA
+    }
   }
 
-  capt <- grid::textGrob(caption, hjust = 0, x = grid::unit(0, "npc"), gp = grid::gpar(fontsize = x$theme$axis.text.x$size))
+  capt <- grid::textGrob(caption, hjust = 0, x = grid::unit(0, "npc"),
+                         gp = grid::gpar(fontsize = x$theme$axis.text.x$size))
 
-  if (exists("logo_img")) {
-    logo <- grid::rasterGrob(logo_img, x = grid::unit(1, "npc"), hjust = 1)
-    grobs <- grid::grobTree(logo, capt)
-  } else {
-    grobs <- grid::grobTree(capt)
-  }
+  logo <- grid::rasterGrob(logo, x = grid::unit(1, "npc"), hjust = 1)
+  grobs <- grid::grobTree(logo, capt)
 
   gt <- ggplot_gtable(ggplot_build(x))
 
