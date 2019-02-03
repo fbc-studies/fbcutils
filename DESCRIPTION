@@ -25,7 +25,8 @@ Imports:
     ggplot2,
     magrittr,
     scales
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    testthat
+    testthat,
+    gt
