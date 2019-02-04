@@ -35,13 +35,11 @@ np_gt <- function(df, x, ..., .fmt_p = gt::fmt_percent) {
   }
 
   quo_x <- rlang::enquo(x)
-  quos_dots <- rlang::quos(...)
-
-  np_tbl <- np(df, !!quo_x, !!!quos_dots)
+  np_tbl <- np(df, !!quo_x, ...)
 
   np_tbl %>%
     dplyr::select(-n_ryhma) %>%
-    dplyr::group_by(!!!quos_dots) %>%
+    dplyr::group_by(...) %>%
     gt::gt(rowname_col = rlang::as_label(quo_x)) %>%
     .fmt_p("p") %>%
     gt::summary_rows(TRUE, "n", fns = "sum", decimal = 0) %>%
