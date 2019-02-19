@@ -21,12 +21,14 @@ merge_overlaps.tbl_df <- function(.data, .start, .end, ..., .max_gap = 0) {
   start <- rlang::enquo(.start)
   end <- rlang::enquo(.end)
 
-  data %>%
-    dplyr::arrange(!!start, !!end, .by_group = TRUE) %>%
+  overlaps_found <- .data %>%
+    dplyr::arrange(!!start, !!end) %>%
     dplyr::mutate(
-      lag_end = dplyr::lag(!!end, default = !!start[1L]) + !!.max_gap,
+      lag_end = dplyr::lag(!!end, default = first(!!start)) + !!.max_gap,
       .seq = 1L + cumsum(!!start > cummax(as.numeric(lag_end)))
-    ) %>%
+    )
+
+  overlaps_found %>%
     dplyr::group_by(.seq, add = TRUE) %>%
     dplyr::summarise(
       !!rlang::as_label(start) := min(!!start),
