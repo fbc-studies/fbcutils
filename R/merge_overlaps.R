@@ -1,38 +1,36 @@
-#' Merge overlapping intervals in a data frame
+#' Merge overlapping intervals
+#' @param .data A data frame. All variables are evaluated in this context.
+#' @param .start An expression that gives the start of the interval.
+#' @param .end An expression that gives the end of the interval.
+#' @param ... Additional arguments passed on to [dplyr::summarize()]. Use these
+#'   to specify how additional columns should be preserved during the merge.
+#' @param .max_gap Mximum distance between the star and end of consecutive
+#'   intervals that are still counted as overlapping.
 #' @export
-merge_overlaps <- function(tbl, start, end, ..., max_gap = 0) {
+merge_overlaps <- function(.data, ...) {
   UseMethod("merge_overlaps")
 }
 
 #' @export
-merge_overlaps.data.frame <- function(tbl, start, end, ..., max_gap = 0) {
-  grps <- dplyr::group_vars(tbl)
-  res <- merge_overlaps(as.data.table(tbl), start, end, ...,
-                        maxp_gap = max_gap, by = grps)
-  dplyr::group_by_at(setDF(res), grps)
+merge_overlaps.data.frame <- function(.data, ...) {
+  as.data.frame(merge_overlaps(tibble::as_tibble(.data), ...))
 }
 
 #' @export
-#' @import data.table
-merge_overlaps.data.table <- function(tbl, start, end, ..., max_gap = 0,
-                                      by = character()) {
-  s <- rlang::enexpr(start)
-  e <- rlang::enexpr(end)
+merge_overlaps.tbl_df <- function(.data, .start, .end, ..., .max_gap = 0) {
+  start <- rlang::enquo(.start)
+  end <- rlang::enquo(.end)
 
-  s_nm <- rlang::as_label(s)
-  e_nm <- rlang::as_label(e)
-
-  setkeyv(tbl, c(by, s_nm, e_nm))
-
-  tbl[, pe := shift(eval(e), fill = eval(s)[1L]) + max_gap, keyby = by]
-  tbl[, g := 1L + cumsum(eval(s) > cummax(as.numeric(pe))), keyby = by]
-
-  res <- tbl[, .(
-    s = min(eval(s)),
-    e = max(eval(e))
-  ), by = c(by, "g")]
-
-  setnames(res, c("g", "s", "e"), c("seq", s_nm, e_nm))
-
-  res
+  data %>%
+    dplyr::arrange(!!start, !!end, .by_group = TRUE) %>%
+    dplyr::mutate(
+      lag_end = dplyr::lag(!!end, default = !!start[1L]) + !!.max_gap,
+      .seq = 1L + cumsum(!!start > cummax(as.numeric(lag_end)))
+    ) %>%
+    dplyr::group_by(.seq, add = TRUE) %>%
+    dplyr::summarise(
+      !!rlang::as_label(start) := min(!!start),
+      !!rlang::as_label(end)   := max(!!end),
+      ...
+    )
 }

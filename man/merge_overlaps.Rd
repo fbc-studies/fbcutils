@@ -2,10 +2,23 @@
 % Please edit documentation in R/merge_overlaps.R
 \name{merge_overlaps}
 \alias{merge_overlaps}
-\title{Merge overlapping intervals in a data frame}
+\title{Merge overlapping intervals}
 \usage{
-merge_overlaps(tbl, start, end, ..., max_gap = 0)
+merge_overlaps(.data, ...)
+}
+\arguments{
+\item{.data}{A data frame. All variables are evaluated in this context.}
+
+\item{...}{Additional arguments passed on to \code{\link[dplyr:summarize]{dplyr::summarize()}}. Use these
+to specify how additional columns should be preserved during the merge.}
+
+\item{.start}{An expression that gives the start of the interval.}
+
+\item{.end}{An expression that gives the end of the interval.}
+
+\item{.max_gap}{Mximum distance between the star and end of consecutive
+intervals that are still counted as overlapping.}
 }
 \description{
-Merge overlapping intervals in a data frame
+Merge overlapping intervals
 }
