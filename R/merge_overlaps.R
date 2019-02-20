@@ -36,3 +36,27 @@ merge_overlaps.tbl_df <- function(.data, .start, .end, ..., .max_gap = 0) {
       ...
     )
 }
+
+#' @export
+identify_overlaps <- function(data, start, end, max_gap = 0) {
+  UseMethod("identify_overlaps")
+}
+
+identify_overlaps.tbl_df <- function(data, start, end, max_gap = 0) {
+  start <- rlang::enquo(start)
+  end <- rlang::enquo(end)
+
+  original_cols <- names(data)
+
+  data %>%
+    dplyr::arrange(!!start, !!end) %>%
+    dplyr::mutate(
+      .lag_end = dplyr::lag(!!end, default = -Inf) + !!max_gap,
+      .seq = cumsum(!!start > cummax(as.numeric(.lag_end)))
+    ) %>%
+    dplyr::select(.seq, one_of(original_cols))
+}
+
+identify_overlaps.data.frame <- function(data, start, end, max_gap = 0) {
+  as.data.frame(identify_overlaps(tibble::as_tibble(data), start, end, max_gap))
+}
